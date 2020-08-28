@@ -1,28 +1,28 @@
-function connectAnimation(winner,loser){
+function connectAnimation(letters,firstColor,secondColor){
   
-    const endColor = winner;
-    const startColor = loser;
+    console.log("Letters: ",letters);
     let i=0;  
     
     connectAnimationStopper = setInterval(()=>{
   
       if(i%2===0){
   
-          letters[i].classList.add(startColor);
+          letters[i].classList.add(firstColor);
       }  
       else{
   
-        letters[i].classList.add(endColor);
+        letters[i].classList.add(secondColor);
       }
   
       i++;
-      if(i==topTextLength){
+      if(i==letters.length){
   
         clearInterval(connectAnimationStopper);
   
         setTimeout(()=>{
   
-          fourAnimation(winner);
+          console.log("FOUR: ",FOUR);
+          fourAnimation(FOUR.children,secondColor);
         },250);
         
       }
@@ -30,19 +30,19 @@ function connectAnimation(winner,loser){
     },350);   
 }
 
-function fourAnimation(winner){
+function fourAnimation(letters,winner){
 
     let i=0;
   
     fourAnimationStopper = setInterval(()=>{
   
-      letters[i+7].classList.add(winner);
-      letters[i+7].classList.remove("outline");
-      letters[i+7].classList.add("glow");
+      letters[i].classList.add(winner);
+      letters[i].classList.remove("outline");
+      letters[i].classList.add("glow");
       
       i++;
   
-      if(i==bottomTextLength){
+      if(i==letters.length){
   
         clearInterval(fourAnimationStopper);
   
@@ -51,14 +51,14 @@ function fourAnimation(winner){
           clearInterval(fourAnimationStopper);
           removeLetterColors(letters);
           loadStaticColors("multi",letters);
-          splashColors();
+          splashColors(document.querySelectorAll(".letter"));
   
         },750)
       }
     }, 100);
 }
 
-function splashColors(){
+function splashColors(letters){
 
     splashInterval = setInterval(()=>{
   
@@ -120,7 +120,7 @@ function loadStaticColors(colorKey,letters){
       }
 }
 
-function winSplash(winner){
+function winSplash(winner,letters){
 
     const gameCells = document.querySelectorAll(".gameCell");
     const color = winner==="player1" ? red:blue;
@@ -148,8 +148,9 @@ function tieSplash(){
   
   let i=0;
 
-  removeTitle();
-  addDrawTitle();
+  const drawTitle = makeTitleH1("Draw","letter","drawText");
+  headerDiv.prepend(drawTitle);
+  loadStaticColors("multi",drawTitle.children);
 
   tieSplashStopper = setInterval(()=>{
 

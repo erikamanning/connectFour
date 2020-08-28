@@ -53,10 +53,34 @@ function clearBoard(){
     }
 }
 
-function removeTitle(){
+function makeTitleH1(titleString,letterClass,id){
 
-  document.querySelector("h1").remove();
+  const newH1 = document.createElement("h1");
+  const spans = [];
 
+  for(let i=0; i<titleString.length; i++){
+
+    spans[i]=document.createElement("span");
+    spans[i].classList.add("letter", letterClass);
+    spans[i].innerText = titleString[i];
+    spans[i].id = id;
+
+    newH1.append(spans[i]);
+  }
+
+  if(titleString === "Connect"){
+
+    newH1.classList.add("connect");
+  }
+  else if(titleString === "Four"){
+    newH1.classList.add("four");
+  }
+  else{
+
+    newH1.classList.add("draw");
+  }
+
+  return(newH1);
 }
 
 function addDrawTitle(){
@@ -83,6 +107,16 @@ function addDrawTitle(){
 
   loadStaticColors("multi",spans);
 
+}
+
+function clearH1s(){
+
+  allH1s = document.querySelectorAll("h1");
+
+  for(let h1 of allH1s){
+
+    h1.remove();
+  }
 }
 
 /*

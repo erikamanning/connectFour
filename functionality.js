@@ -2,6 +2,8 @@ function addRestartButton(){
 
     const buttonPanel = document.querySelector("#buttonPanel");
     const startButton = document.createElement("button");
+    const h1 = document.querySelector('h1');
+    
     
     startButton.innerText = "RESTART";
   
@@ -11,7 +13,13 @@ function addRestartButton(){
       clearLetterColors();
       clearBoard();
       clearArray();
+      h1.remove();
+
+      
+
+      addTitle("Connect Four","letter","#connectFourText");
       makeBoard();
+      
   
   
       if(startColor == red){
@@ -34,8 +42,10 @@ function addRestartButton(){
 /** handleClick: handle click of column top to play piece */
 function handleClick(evt) {
 
+  const titleLetters = document.querySelectorAll("#connectFourText")
+
     stopAllIntervals();
-    loadStaticColors('multi',letters);
+    //loadStaticColors('multi',letters);
   
     // get x from ID of clicked cell
     const x = +evt.target.id;
@@ -54,7 +64,7 @@ function handleClick(evt) {
     // check for win
     if (checkForWin()) {
   
-      winSplash(`player${currPlayer}`);
+      winSplash(`player${currPlayer}`,titleLetters);
       endGame(`Player ${currPlayer} won!`);
     }
   
@@ -136,7 +146,8 @@ const tieButton = document.querySelector("#tiebutton");
 tieButton.addEventListener("click", (event)=>{
 
   clearBoard();
-  //clearArray();
+  clearH1s();
+
   tieSplash();
 
 });

@@ -2,32 +2,57 @@
 body{
   max-width: 500px;
   margin: auto;
-  margin-top: 3%;
   display: block;
   background-color: black;
   font-family: 'Russo One', sans-serif;
 }
 
+#headingDiv{
+
+  margin: 20px 0px 0px 0px;
+  max-width: 412px;
+  height:240px;
+  position: relative;
+}
+
 h1{
-  max-width: 422px;
+  max-width: 412px;
+  margin: 0px 0px 0px 0px;
   align-content: center;
   text-align: center;
   font-family: 'Russo One', sans-serif;
   font-size: 100px;
-  margin-bottom: 20px;
-  margin-top: 30px;
-  display: inline-block;
+  /* margin-top: 30px; */
+  /* display: inline-block; */
+  
 }
 
 .letter{
-  margin: -13px -13px;
+  margin: 1px 1px;
   text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
   color: black;
 }
+
+.connect{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+}
+.four{
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+}
+
 .draw{
-  margin: 8px 8px;
-  text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
-  color: black;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -10%);
 }
 
 

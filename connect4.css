@@ -1,19 +1,56 @@
 /* game board table */
+body{
+  max-width: 500px;
+  margin: auto;
+  margin-top: 3%;
+  display: block;
+  background-color: black;
+}
+
+h1{
+  max-width: 422px;
+  align-content: center;
+  text-align: center;
+  font-family: 'Russo One', sans-serif;
+  font-size: 100px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  display: inline-block;
+}
+
+.letter{
+  margin: -13px -13px;
+  text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+  color: black;
+}
+
+.red{
+
+  color: red;;
+}
+
+.blue{
+  color: blue;
+}
+
 
 #board td {
   width: 50px;
   height: 50px;
-  border: solid 1px #666;
+  border: 3px solid yellow;
+  border-radius: 25%;
+  background-color: #0d0d0d;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
   /* TODO: make into circles */
-  margin: 5px;
+  margin: 3px;
   width: 80%;
   height: 80%;
   border-radius: 50%;
+  border: 2px solid white;
 }
 
 .player1{
@@ -35,5 +72,7 @@
 }
 
 #column-top td:hover {
-  background-color: gold;
+  background-color: yellow;
+  cursor: pointer
+
 }

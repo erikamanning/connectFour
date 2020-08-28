@@ -4,6 +4,11 @@
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
+const letters = document.querySelectorAll(".letter");
+const red ="red";
+const blue = "blue";
+let gameCounter = 0;
+let splashInterval,connectAnimationStopper, fourAnimationStopper;
 
 const WIDTH = 7;
 const HEIGHT = 6;
@@ -185,5 +190,197 @@ function checkForWin() {
   }
 }
 
+function getRedOrBlue(val){
+
+  return val ===1 ? "red":"blue";
+}
+
+function loadInitialColors(){
+
+  for(let i =0; i<letters.length; i++){
+    letters[i].classList.remove(...letters[i].classList);
+    letters[i].classList.add("letter");
+    letters[i].classList.add(getRedOrBlue(i%2));
+
+  }
+
+}
+
+function splashColors(){
+
+  splashInterval = setInterval(()=>{
+
+    for(let letter of letters){
+
+
+        if(letter.classList.contains("red")){
+
+          letter.classList.add("blue");
+          letter.classList.remove("red");
+        }
+        else{
+        
+          letter.classList.add("red");
+          letter.classList.remove("blue");
+        }
+    }
+  },500);
+
+}
+
+function titleTopAnimation(winner,loser){
+
+  const topTextLength = 7;
+  const endColor = winner;
+  const startColor = loser;
+  let i=0;  
+  
+  connectAnimationStopper = setInterval(()=>{
+
+    switch (i) {
+      case 0:
+        
+        letters[i].classList.add(startColor);
+        break;
+        
+      case 1:
+
+        letters[i].classList.add(startColor);
+        break;
+
+      case 2:
+      
+        letters[i].classList.add(endColor);
+        break;
+        
+      case 3:
+      
+        letters[i].classList.add(startColor);
+        break;
+        
+      case 4:
+      
+        letters[i].classList.add(startColor);
+        break;
+        
+      case 5:
+    
+        letters[i].classList.add(startColor);
+        break;
+        
+      case 6:
+
+        letters[i].classList.add(endColor);
+        break;
+    
+      default:
+        break;
+    }
+
+    i++;
+    if(i==topTextLength){
+
+      clearInterval(connectAnimationStopper);
+
+      setTimeout(()=>{
+
+        titleBottomAnimation(winner);
+      },500);
+      
+    }
+
+  },750);
+  
+}
+
+function titleBottomAnimation(winner){
+
+  const bottomTextLength = 4;
+  let i=0;
+
+  fourAnimationStopper = setInterval(()=>{
+    switch (i) {
+      case 0:
+        
+        letters[i+7].classList.add(winner);
+        break;
+        
+      case 1:
+
+        letters[i+7].classList.add(winner);
+        break;
+
+      case 2:
+      
+        letters[i+7].classList.add(winner);
+        break;
+        
+      case 3:
+      
+        letters[i+7].classList.add(winner);
+        break;
+    }
+    i++;
+    if(i==bottomTextLength){
+
+      clearInterval(fourAnimationStopper);
+
+      setTimeout(()=>{
+
+        loadInitialColors();
+        splashColors();
+
+      },1000)
+
+    }
+  }, 350);
+
+}
+
+function addStartButton(){
+
+  const htmlBoard = document.querySelector("#board");
+  const startButton = document.createElement("button");
+  
+  startButton.innerText = "START";
+  startButton.classList.add("letter");
+
+
+  startButton.addEventListener("click",(event) => {
+
+    clearInterval(splashInterval);
+    clearInterval(connectAnimationStopper);
+    clearInterval(fourAnimationStopper);
+    clearColors();
+    gameCounter%2===0 ? titleTopAnimation(red,blue) : titleTopAnimation(blue,red);
+    gameCounter++;
+
+  });
+
+  htmlBoard.append(startButton);
+
+
+
+
+}
+function clearColors(){
+
+  for(let i =0; i<letters.length; i++){
+    letters[i].classList.remove(...letters[i].classList);
+    letters[i].classList.add("letter");
+    
+  }
+
+
+
+}
+
+// loadInitialColors();
+// splashColors();
+
+gameCounter%2===0 ? titleTopAnimation(blue,red) : titleTopAnimation(red,blue);
+
+
 makeBoard();
 makeHtmlBoard();
+addStartButton();

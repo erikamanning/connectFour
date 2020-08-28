@@ -101,6 +101,89 @@ function removeLetterColors(letters){
   }
 }
 
+
+function drawBoardFill(){
+
+  let currentColor;
+  let i = 0;
+
+  drawFillStopper = setInterval(()=>{
+
+    if(i<21){
+
+      currentColor = "player2";
+      const piece = createGamePiece(currentColor);
+      gameCells[i].append(piece);
+    }
+
+    else{
+    currentColor = 'player1';
+    const piece = createGamePiece(currentColor);
+    gameCells[i].append(piece);
+    }
+
+    i++;
+
+    if(i=== HEIGHT*WIDTH){
+
+      clearInterval(drawFillStopper);
+    }
+
+  },50);
+
+}
+
+function fillBoardSolid(color){
+
+  let currentColor;
+  let i = 0;
+
+  tieSplashStopper = setInterval(()=>{
+
+    if(i<21){
+
+      currentColor = "player2";
+      const piece = createGamePiece(currentColor);
+      gameCells[i].append(piece);
+    }
+
+    else{
+    currentColor = 'player1';
+    const piece = createGamePiece(currentColor);
+    gameCells[i].append(piece);
+    }
+
+    i++;
+
+    if(i=== HEIGHT*WIDTH){
+
+      clearInterval(tieSplashStopper);
+    }
+
+  },50);
+
+}
+
+function fillBoard(fillConfig){
+
+
+  if(fillConfig === "draw"){
+
+    drawBoardFill();
+
+  }
+  else if(fillConfig=== 'red'){
+
+
+  }
+  else if(fillConfig === 'blue'){
+
+
+  }
+
+
+}
+
 function loadStaticColors(colorKey,letters){
 
     let color;  

@@ -8,7 +8,7 @@
 const red ="red";
 const blue = "blue";
 let gameCounter = 0;
-let splashInterval,connectAnimationStopper, fourAnimationStopper, tieSplashStopper;
+let splashInterval,connectAnimationStopper, fourAnimationStopper, tieSplashStopper,drawFillStopper;
 const topTextLength = 7;
 const bottomTextLength = 4;
 let winner;
@@ -37,3 +37,4 @@ connectAnimation(CONNECT.children,startColor,winColor);
 makeBoard();
 makeHtmlBoard();
 //addRestartButton();
+const gameCells = document.querySelectorAll(".gameCell");

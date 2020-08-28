@@ -13,14 +13,12 @@ function addRestartButton(){
       clearLetterColors();
       clearBoard();
       clearArray();
-      h1.remove();
+      clearH1s();
 
-      
-
-      addTitle("Connect Four","letter","#connectFourText");
+      headerDiv.prepend(FOUR);
+      headerDiv.prepend(CONNECT);
+      connectAnimation(CONNECT.children,startColor,winColor);
       makeBoard();
-      
-  
   
       if(startColor == red){
         startColor=blue;

@@ -119,6 +119,14 @@ function clearH1s(){
   }
 }
 
+function createGamePiece(colorCode){
+
+  const piece = document.createElement("div");
+  piece.classList.add("piece", colorCode);
+
+  return piece;
+}
+
 /*
 
 <h1>

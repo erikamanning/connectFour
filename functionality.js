@@ -62,6 +62,8 @@ function handleClick(evt) {
     // TODO: check if all cells in board are filled; if so call, call endGame
     if(board.every(cell => cell.every(val => val===1 || val ===2 ? true:false))){
   
+      // clearBoard();
+      // tieSplash();
       endGame("It\'s a tie!");
     }
   
@@ -129,3 +131,12 @@ function getRedOrBlue(val){
 function winHandler(){
 
 }
+
+const tieButton = document.querySelector("#tiebutton");
+tieButton.addEventListener("click", (event)=>{
+
+  clearBoard();
+  //clearArray();
+  tieSplash();
+
+});

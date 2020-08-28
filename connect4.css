@@ -23,8 +23,14 @@ h1{
   margin: -13px -13px;
   text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
   color: black;
-
 }
+.draw{
+  margin: 8px 8px;
+  text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+  color: black;
+}
+
+
 .outline{
 
   text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
@@ -35,11 +41,13 @@ h1{
 
 .red{
 
-  color: red;;
+  color: red;
+
 }
 
 .blue{
   color: blue;
+  
 }
 
 

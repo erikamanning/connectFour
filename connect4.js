@@ -8,7 +8,7 @@ const letters = document.querySelectorAll(".letter");
 const red ="red";
 const blue = "blue";
 let gameCounter = 0;
-let splashInterval,connectAnimationStopper, fourAnimationStopper;
+let splashInterval,connectAnimationStopper, fourAnimationStopper, tieSplashStopper;
 const topTextLength = 7;
 const bottomTextLength = 4;
 let winner;

@@ -49,6 +49,7 @@ function fourAnimation(winner){
         setTimeout(()=>{
   
           clearInterval(fourAnimationStopper);
+          removeLetterColors(letters);
           loadStaticColors("multi",letters);
           splashColors();
   
@@ -86,13 +87,26 @@ function clearLetterColors(){
     }
 }
 
+function removeLetterColors(letters){
+
+  for(letter of letters){
+
+    if(letter.classList.contains("red")){
+      letter.classList.remove("red");
+    }
+    if(letter.classList.contains("blue")){
+
+      letter.classList.remove("blue");
+    }
+  }
+}
+
 function loadStaticColors(colorKey,letters){
 
     let color;  
-  //console.log("color key: ",colorKey);
+    
       for(let i =0; i<letters.length; i++){
-        letters[i].classList.remove(...letters[i].classList);
-        letters[i].classList.add("letter");
+
         if(colorKey === 'multi'){
   
             color = getRedOrBlue(i%2)
@@ -123,6 +137,36 @@ function winSplash(winner){
   
       gameCell.append(piece);
       //console.log(gameCell);
+      removeLetterColors(letters);
       loadStaticColors(color,letters);    
     } 
+}
+function tieSplash(){
+
+  const gameCells = document.querySelectorAll(".gameCell");
+  let color;
+  
+  let i=0;
+
+  removeTitle();
+  addDrawTitle();
+
+  tieSplashStopper = setInterval(()=>{
+
+    const piece = document.createElement("div");
+    piece.classList.add("piece");
+    if(i<21){
+      color = 'player2'
+    }
+    else color = 'player1';
+    piece.classList.add(color); 
+    gameCells[i].append(piece);
+    i++;
+
+    if(i=== HEIGHT*WIDTH){
+
+      clearInterval(tieSplashStopper);
+    }
+
+  },50);
 }

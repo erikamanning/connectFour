@@ -52,3 +52,53 @@ function clearBoard(){
       }
     }
 }
+
+function removeTitle(){
+
+  document.querySelector("h1").remove();
+
+}
+
+function addDrawTitle(){
+
+  const newH1 = document.createElement("h1");
+  const drawText = "DRAW!";
+  let i=0;
+
+  const spans = [];
+
+  for(let i=0; i<5; i++){
+
+    spans.push(document.createElement("span"));
+    spans[i].classList.add("letter","draw");
+  }
+  for(let char of drawText){
+
+    spans[i].innerText = char;
+    newH1.append(spans[i]);
+    i++;
+  }
+  
+  document.body.prepend(newH1);
+
+  loadStaticColors("multi",spans);
+
+}
+
+/*
+
+<h1>
+  <span class="letter outline">C</span>
+  <span class="letter outline">o</span>
+  <span class="letter outline">n</span>
+  <span class="letter outline">n</span>
+  <span class="letter outline">e</span>
+  <span class="letter outline">c</span>
+  <span class="letter outline">t</span> 
+  <span class="letter outline">F</span>
+  <span class="letter outline">o</span>
+  <span class="letter outline">u</span>
+  <span class="letter outline">r</span>
+</h1>
+
+*/

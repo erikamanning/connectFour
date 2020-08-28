@@ -9,6 +9,12 @@ const red ="red";
 const blue = "blue";
 let gameCounter = 0;
 let splashInterval,connectAnimationStopper, fourAnimationStopper;
+const topTextLength = 7;
+const bottomTextLength = 4;
+let winner;
+
+let startColor =red;
+let winColor = blue;
 
 const WIDTH = 7;
 const HEIGHT = 6;
@@ -59,6 +65,7 @@ function makeHtmlBoard() {
     for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
       cell.setAttribute("id", `${y}-${x}`);
+      cell.classList.add("gameCell");
       row.append(cell);
     }
     htmlBoard.append(row);
@@ -114,11 +121,14 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 function endGame(msg) {
   // TODO: pop up alert message
-  alert(msg);
+  console.log(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
 function handleClick(evt) {
+
+  stopAllIntervals();
+  loadStaticColors('multi',letters);
 
   // get x from ID of clicked cell
   const x = +evt.target.id;
@@ -137,20 +147,52 @@ function handleClick(evt) {
   // check for win
   if (checkForWin()) {
 
-    return endGame(`Player ${currPlayer} won!`);
+    winSplash(`player${currPlayer}`);
+    endGame(`Player ${currPlayer} won!`);
   }
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
   if(board.every(cell => cell.every(val => val===1 || val ===2 ? true:false))){
 
-    endGame("It\'s a tie bitches!");
+    endGame("It\'s a tie!");
   }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   currPlayer = currPlayer === 1 ? 2:1;
+
+  // clear splash colors
+  clearInterval(splashInterval);
   
+}
+
+function winHandler(){
+
+}
+function winSplash(winner){
+
+  const gameCells = document.querySelectorAll(".gameCell");
+  const color = winner==="player1" ? red:blue;
+  //console.log(gameCells);
+
+  for(let gameCell of gameCells){
+
+    const piece = document.createElement("div");
+    piece.classList.add("piece",winner);
+
+    if(gameCell.childElementCount>0){
+      gameCell.firstElementChild.remove();
+    }
+
+    gameCell.append(piece);
+    //console.log(gameCell);
+    loadStaticColors(color,letters);    
+  } 
+}
+
+function clearData(){
+
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -195,15 +237,24 @@ function getRedOrBlue(val){
   return val ===1 ? "red":"blue";
 }
 
-function loadInitialColors(){
+function loadStaticColors(colorKey,letters){
 
-  for(let i =0; i<letters.length; i++){
-    letters[i].classList.remove(...letters[i].classList);
-    letters[i].classList.add("letter");
-    letters[i].classList.add(getRedOrBlue(i%2));
+  let color;  
+//console.log("color key: ",colorKey);
+    for(let i =0; i<letters.length; i++){
+      letters[i].classList.remove(...letters[i].classList);
+      letters[i].classList.add("letter");
+      if(colorKey === 'multi'){
 
-  }
+          color = getRedOrBlue(i%2)
+      }
+      else{
 
+        color = colorKey;
+      }
+
+      letters[i].classList.add(color);
+    }
 }
 
 function splashColors(){
@@ -211,7 +262,6 @@ function splashColors(){
   splashInterval = setInterval(()=>{
 
     for(let letter of letters){
-
 
         if(letter.classList.contains("red")){
 
@@ -225,56 +275,23 @@ function splashColors(){
         }
     }
   },500);
-
 }
 
-function titleTopAnimation(winner,loser){
-
-  const topTextLength = 7;
+function connectAnimation(winner,loser){
+  
   const endColor = winner;
   const startColor = loser;
   let i=0;  
   
   connectAnimationStopper = setInterval(()=>{
 
-    switch (i) {
-      case 0:
-        
-        letters[i].classList.add(startColor);
-        break;
-        
-      case 1:
+    if(i%2===0){
 
         letters[i].classList.add(startColor);
-        break;
+    }  
+    else{
 
-      case 2:
-      
-        letters[i].classList.add(endColor);
-        break;
-        
-      case 3:
-      
-        letters[i].classList.add(startColor);
-        break;
-        
-      case 4:
-      
-        letters[i].classList.add(startColor);
-        break;
-        
-      case 5:
-    
-        letters[i].classList.add(startColor);
-        break;
-        
-      case 6:
-
-        letters[i].classList.add(endColor);
-        break;
-    
-      default:
-        break;
+      letters[i].classList.add(endColor);
     }
 
     i++;
@@ -284,103 +301,117 @@ function titleTopAnimation(winner,loser){
 
       setTimeout(()=>{
 
-        titleBottomAnimation(winner);
-      },500);
+        fourAnimation(winner);
+      },250);
       
     }
 
-  },750);
+  },350);
   
 }
 
-function titleBottomAnimation(winner){
+function fourAnimation(winner){
 
-  const bottomTextLength = 4;
   let i=0;
 
   fourAnimationStopper = setInterval(()=>{
-    switch (i) {
-      case 0:
-        
-        letters[i+7].classList.add(winner);
-        break;
-        
-      case 1:
 
-        letters[i+7].classList.add(winner);
-        break;
-
-      case 2:
-      
-        letters[i+7].classList.add(winner);
-        break;
-        
-      case 3:
-      
-        letters[i+7].classList.add(winner);
-        break;
-    }
+    letters[i+7].classList.add(winner);
+    letters[i+7].classList.remove("outline");
+    letters[i+7].classList.add("glow");
+    
     i++;
+
     if(i==bottomTextLength){
 
       clearInterval(fourAnimationStopper);
 
       setTimeout(()=>{
 
-        loadInitialColors();
+        clearInterval(fourAnimationStopper);
+        loadStaticColors("multi",letters);
         splashColors();
 
-      },1000)
-
+      },750)
     }
-  }, 350);
+  }, 100);
 
 }
 
-function addStartButton(){
+function addRestartButton(){
 
-  const htmlBoard = document.querySelector("#board");
+  const buttonPanel = document.querySelector("#buttonPanel");
   const startButton = document.createElement("button");
   
-  startButton.innerText = "START";
-  startButton.classList.add("letter");
-
+  startButton.innerText = "RESTART";
 
   startButton.addEventListener("click",(event) => {
 
-    clearInterval(splashInterval);
-    clearInterval(connectAnimationStopper);
-    clearInterval(fourAnimationStopper);
-    clearColors();
-    gameCounter%2===0 ? titleTopAnimation(red,blue) : titleTopAnimation(blue,red);
+    stopAllIntervals();
+    clearLetterColors();
+    clearBoard();
+    clearArray();
+    makeBoard();
+
+
+    if(startColor == red){
+      startColor=blue;
+      winColor = red;
+    }
+    else{
+      startColor=red;
+      winColor = blue;
+    }
+
+    connectAnimation(startColor,winColor);
     gameCounter++;
 
   });
 
-  htmlBoard.append(startButton);
+  buttonPanel.append(startButton);
+}
+function clearArray(){
 
+  for(let y=0; y<HEIGHT; y++){
 
+    board.pop();
+  }
+}
 
+function clearBoard(){
+
+  const gameCells = document.querySelectorAll(".gameCell");
+  //console.log("Game Cells BEFORE clear() : ",gameCells);
+  for(let cell of gameCells){
+
+    if(cell.childElementCount >0){
+
+      cell.firstElementChild.remove();
+    }
+  }
+  //console.log("Game Cells AFTER clear() : ",gameCells);
 
 }
-function clearColors(){
+
+function stopAllIntervals(){
+
+  clearInterval(splashInterval);
+  clearInterval(connectAnimationStopper);
+  clearInterval(fourAnimationStopper);
+}
+
+function clearLetterColors(){
 
   for(let i =0; i<letters.length; i++){
     letters[i].classList.remove(...letters[i].classList);
     letters[i].classList.add("letter");
     
   }
-
-
-
 }
 
-// loadInitialColors();
-// splashColors();
-
-gameCounter%2===0 ? titleTopAnimation(blue,red) : titleTopAnimation(red,blue);
+connectAnimation(startColor,winColor);
 
 
 makeBoard();
 makeHtmlBoard();
-addStartButton();
+addRestartButton();

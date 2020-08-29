@@ -1,3 +1,8 @@
+/*************************************************************************** 
+
+                          HTML Doc Editing Functions
+
+***************************************************************************/
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 function makeHtmlBoard() {
@@ -33,27 +38,29 @@ function makeHtmlBoard() {
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 function placeInTable(y, x) {
-    // TODO: make a div and insert into correct table cell
-    const piece = document.createElement("div");
-    piece.classList.add("piece",`player${currPlayer}`);
-    const currentSquare = document.getElementById(`${y}-${x}`);
-    currentSquare.append(piece);
-  }
-
-function clearBoard(){
-
-    const gameCells = document.querySelectorAll(".gameCell");
   
-    for(let cell of gameCells){
-  
-      if(cell.childElementCount >0){
-  
-        cell.firstElementChild.remove();
-      }
-    }
+  // TODO: make a div and insert into correct table cell
+  const piece = createGamePiece(`player${currPlayer}`);
+  const currentSquare = document.getElementById(`${y}-${x}`);
+  currentSquare.append(piece);
 }
 
-function makeTitleH1(titleString,letterClass,id){
+// clears all pieces from game board
+function clearBoard(){
+
+  const gameCells = document.querySelectorAll(".gameCell");
+
+  for(let cell of gameCells){
+
+    if(cell.childElementCount >0){
+
+      cell.firstElementChild.remove();
+    }
+  }
+}
+
+// makes a heading for the game, multiple configurations
+function makeTitleH1(titleString,letterClass,position){
 
   const newH1 = document.createElement("h1");
   const spans = [];
@@ -61,54 +68,28 @@ function makeTitleH1(titleString,letterClass,id){
   for(let i=0; i<titleString.length; i++){
 
     spans[i]=document.createElement("span");
-    spans[i].classList.add("letter", letterClass);
+    spans[i].classList.add("letter", letterClass,"outline");
     spans[i].innerText = titleString[i];
-    spans[i].id = id;
 
     newH1.append(spans[i]);
   }
 
-  if(titleString === "Connect"){
+  if(position === "connect"){
 
-    newH1.classList.add("connect");
+    newH1.classList.add("connect","titleText");
   }
-  else if(titleString === "Four"){
-    newH1.classList.add("four");
+  else if(position === "four"){
+    newH1.classList.add("four","titleText");
   }
   else{
 
-    newH1.classList.add("draw");
+    newH1.classList.add("draw","outline");
   }
 
   return(newH1);
 }
 
-function addDrawTitle(){
-
-  const newH1 = document.createElement("h1");
-  const drawText = "DRAW!";
-  let i=0;
-
-  const spans = [];
-
-  for(let i=0; i<5; i++){
-
-    spans.push(document.createElement("span"));
-    spans[i].classList.add("letter","draw");
-  }
-  for(let char of drawText){
-
-    spans[i].innerText = char;
-    newH1.append(spans[i]);
-    i++;
-  }
-  
-  document.body.prepend(newH1);
-
-  loadStaticColors("multi",spans);
-
-}
-
+// removes all h1s from the game
 function clearH1s(){
 
   allH1s = document.querySelectorAll("h1");
@@ -116,9 +97,10 @@ function clearH1s(){
   for(let h1 of allH1s){
 
     h1.remove();
-  }
+  } 
 }
 
+// creates a game piece and returns it
 function createGamePiece(colorCode){
 
   const piece = document.createElement("div");
@@ -126,21 +108,3 @@ function createGamePiece(colorCode){
 
   return piece;
 }
-
-/*
-
-<h1>
-  <span class="letter outline">C</span>
-  <span class="letter outline">o</span>
-  <span class="letter outline">n</span>
-  <span class="letter outline">n</span>
-  <span class="letter outline">e</span>
-  <span class="letter outline">c</span>
-  <span class="letter outline">t</span> 
-  <span class="letter outline">F</span>
-  <span class="letter outline">o</span>
-  <span class="letter outline">u</span>
-  <span class="letter outline">r</span>
-</h1>
-
-*/

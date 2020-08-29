@@ -4,37 +4,46 @@
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
-// const letters = document.querySelectorAll(".letter");
-const red ="red";
-const blue = "blue";
-let gameCounter = 0;
-let splashInterval,connectAnimationStopper, fourAnimationStopper, tieSplashStopper,drawFillStopper;
+ /*************************************************************************** 
+
+                        GLOBAL Const Variables
+
+***************************************************************************/
 const topTextLength = 7;
 const bottomTextLength = 4;
-let winner;
-let startColor =red;
-let winColor = blue;
-
 const WIDTH = 7;
 const HEIGHT = 6;
-
-let currPlayer = 1; // active player: 1 or 2
+const red ="Red";
+const blue = "Blue";
 const board = []; // array of rows, each row is array of cells  (board[y][x])
-
-// game
-// addTitle("Connect Four","letter","connectFourText");
-// const titletext = document.querySelector("#connectFourText");
-
 const headerDiv = document.querySelector("#headingDiv");
-let CONNECT=makeTitleH1("Connect","letter","connectText");
-let FOUR=makeTitleH1("Four","letter","fourText");
+const buttonPanel = document.querySelector("#buttonPanel");
+const CONNECT=makeTitleH1("Connect","letter","connect");
+const FOUR=makeTitleH1("Four","letter","four");
+/*************************************************************************** 
+
+                        Global Let Variables
+
+***************************************************************************/
+let winner;
+let currPlayer = 1; // active player: 1 or 2
+let startColor ="Red";
+let winColor = "Blue";
+let gameWon  = false;
+let startingPlayer = red;
+let winningColor;
+let splashIntervalStopper,connectAnimationStopper, fourAnimationStopper,alternatingLetterColorFillStopper;
+
+/*************************************************************************** 
+
+                                GAME
+
+***************************************************************************/
 headerDiv.prepend(FOUR);
 headerDiv.prepend(CONNECT);
-
-// const titletext = document.querySelectorAll("#connectFourText");
-// console.log(titletext);
-connectAnimation(CONNECT.children,startColor,winColor);
+loadStaticLetterColors(document.querySelectorAll(".letter"),"multi");
 makeBoard();
 makeHtmlBoard();
-//addRestartButton();
+addRestartButton();
+addTieButton();
 const gameCells = document.querySelectorAll(".gameCell");
